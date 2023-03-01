@@ -1,6 +1,6 @@
 import mongoose from "mongoose";
 
-const lifeURI = ""
+const lifeURI = "mongodb+srv://sylviaDB:<atlaspassword>@cluster0.fhx2vt1.mongodb.net/test"
 
 const db_Url = "mongodb://localhost/AugustineBlog"
 
