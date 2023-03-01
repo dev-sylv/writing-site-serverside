@@ -104,6 +104,22 @@ export const UploadBlogPost = async(req: Request, res: Response): Promise<Respon
 }
 
 // views of each blog post:
+export const BlogPostViews = async(req: Request, res: Response): Promise<Response> =>{
+    try {
+        const blogViews = await BlogModels.findByIdAndUpdate(
+            req.params.blogID,
+            {
+
+            },
+            {new: true}
+        )
+    } catch (error) {
+        return res.status(400).json({
+            message: "An error occured in getting views of this blog post",
+            data: error
+        })
+    }
+}
 
 // update a blog post:
 export const UpdateBlogPost = async(req: Request, res: Response): Promise<Response> =>{
