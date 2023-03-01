@@ -1,22 +1,31 @@
 import multer from "multer";
 
+import { Request } from "express";
+
 type DestinationCallBack = (error: Error | null, destination: string) => void
 
 type FileCallBack = (error: Error | null, filename: string) => void
 
-const storage = multer.diskStorage({
+const Storage = multer.diskStorage({
     destination: (
         req: Request,
-        file: Express.Multer.File
+        file: Express.Multer.File,
+        cb : DestinationCallBack
     ) => {
         cb(null, "Uploads")
     },
 
     filename: (
         req: Request,
-        filename: FileCallBack,
-        cb
+        file: Express.Multer.File,
+        cb: FileCallBack
     ) =>{
         cb(null, file.originalname)
     }
-})
+});
+
+const BlogUpload = multer({
+    storage: Storage
+}).single("postimage");
+
+export { BlogUpload }
