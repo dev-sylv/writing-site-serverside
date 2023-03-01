@@ -4,6 +4,7 @@ import {environmentVariables} from "../Config/environmentVariables"
 
 import cors from "cors";
 import { DBconnect } from "../Config/db";
+import adminroutes from "../Routes/AdminRoutes";
 
 const port = environmentVariables.port
 
@@ -22,7 +23,10 @@ app.get("/", (req: Request, res: Response) =>{
     return res.status(200).json({
         message: "Server is up and running for the writing site"
     })
-})
+});
+
+// Application Routes(Admin):
+app.use("/api/admin", adminroutes)
 
 // Listening to my port
 app.listen(port, () =>{
