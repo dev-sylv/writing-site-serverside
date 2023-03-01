@@ -3,6 +3,7 @@ import cloudinary from "../Config/cloudinary"
 import { Request, Response } from "express";
 import { BlogData } from "../AllInterfaces/AllInterfaces";
 import { environmentVariables } from "../Config/environmentVariables";
+import AdminModels from "../Models/adminModels";
 
 // Get all blog posts:
 export const AllBlogPost = async(req: Request, res: Response): Promise<Response> =>{
@@ -57,9 +58,12 @@ export const UploadBlogPost = async(req: Request, res: Response): Promise<Respon
     try {
         const cloud_Img = await cloudinary.uploader.Upload(req?.file?.path);
 
+        const admin = await AdminModels.findById(req.params.adminID)
+
         const { blogname, blogcategory, blogdescription, blogimage, bloglinks, views } = req.body;
 
         const newBlogPost = await BlogModels.create({
+            blogger: admin?.name,
             blogname,
             blogcategory,
             blogdescription,
