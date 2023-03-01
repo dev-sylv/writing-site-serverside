@@ -25,7 +25,22 @@ export const AdminRegister = async(req: Request, res: Response): Promise<Respons
 // Admin Login
 export const AdminLogin = async(req: Request, res: Response): Promise<Response> =>{
     try {
-        const 
+        const { email, password } = req.body;
+        const adminname = environmentVariables.Adminname
+        const adminemail = environmentVariables.AdminEmail
+        const adminpassword = environmentVariables.AdminPassword
+
+        if (email === adminemail && password === adminpassword) {
+            return res.status(200).json({
+                message: "Admin Login Successful",
+                data: `Welcome ${adminname}`
+            })
+        } else {
+            return res.status(404).json({
+                message: "You're not an authorized Admin",
+                data: "BACK OFF!!!"
+            })
+        }
     } catch (error) {
         return res.status(400).json({
             message: "Login failed", error
