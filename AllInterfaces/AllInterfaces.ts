@@ -6,3 +6,9 @@ export interface BlogData {
     bloglinks: string;
     views: [];
 }
+
+export interface AdminData {
+    name: string;
+    email: string;
+    password: string;
+}
