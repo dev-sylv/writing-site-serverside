@@ -23,4 +23,12 @@ export const AdminRegister = async(req: Request, res: Response): Promise<Respons
 }
 
 // Admin Login
-
+export const AdminLogin = async(req: Request, res: Response): Promise<Response> =>{
+    try {
+        const 
+    } catch (error) {
+        return res.status(400).json({
+            message: "Login failed", error
+        })
+    }
+}
