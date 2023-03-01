@@ -109,10 +109,14 @@ export const BlogPostViews = async(req: Request, res: Response): Promise<Respons
         const blogViews = await BlogModels.findByIdAndUpdate(
             req.params.blogID,
             {
-
+                $push: {views: req.body.ip}
             },
             {new: true}
         )
+        return res.status(200).json({
+            message: "Successfully got blog post views",
+            data: blogViews
+        })
     } catch (error) {
         return res.status(400).json({
             message: "An error occured in getting views of this blog post",
