@@ -1,4 +1,5 @@
 import AdminModels from "../Models/adminModels";
+import bcrypt from "bcrypt"
 
 import { Request, Response } from "express";
 import { environmentVariables } from "../Config/environmentVariables";
@@ -30,7 +31,10 @@ export const AdminLogin = async(req: Request, res: Response): Promise<Response> 
         const adminemail = environmentVariables.AdminEmail
         const adminpassword = environmentVariables.AdminPassword
 
-        if (email === adminemail && password === adminpassword) {
+        const salt = await bcrypt.genSalt(10);
+        const hashed = await bcrypt.hash(password, salt)
+
+        if (email === adminemail && hashed === adminpassword) {
             return res.status(200).json({
                 message: "Admin Login Successful",
                 data: `Welcome ${adminname}`
