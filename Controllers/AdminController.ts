@@ -35,10 +35,9 @@ export const AdminLogin = async(req: Request, res: Response): Promise<Response> 
         const adminemail = environmentVariables.AdminEmail
         const adminpassword = environmentVariables.AdminPassword
 
-        const salt = await bcrypt.genSalt(10);
-        const hashedAdminPassword = await bcrypt.hash(password, salt)
+        // const hashedAdmin = await bcrypt.compare(password, adminpassword)
 
-        if (email === adminemail && hashedAdminPassword === adminpassword) {
+        if (email === adminemail && password === adminpassword) {
             return res.status(200).json({
                 message: "Admin Login Successful",
                 data: `Welcome ${adminname}`
