@@ -26,6 +26,27 @@ export const AllBlogPost = async(req: Request, res: Response): Promise<Response>
 }
 
 // Get a single post:
+export const SingleBlogPost = async(req: Request, res: Response): Promise<Response> =>{
+    try {
+        const blogpost = await BlogModels.findById(req.params.blogID);
+
+        if (blogpost) {
+            return res.status(200).json({
+                message: "Successfully got this blog post",
+                data: blogpost
+            })
+        } else {
+            return res.status(404).json({
+                message: "Blog Posts doesn't exist"
+            })
+        }
+    } catch (error) {
+        return res.status(400).json({
+            message: "Couldn't get this blog post",
+            data: error
+        })
+    }
+}
 
 // Search for a blog post:
 
