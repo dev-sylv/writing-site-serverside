@@ -52,6 +52,17 @@ export const SingleBlogPost = async(req: Request, res: Response): Promise<Respon
 }
 
 // Search for a blog post:
+export const SearchBlogPost = async(req: Request, res: Response): Promise<Response> =>{
+    try {
+        const searchPost = await BlogModels.findOne(req.query);
+        return res.
+    } catch (error) {
+        return res.status(400).json({
+            message: "An error occured in searching for blog post",
+            data: error
+        })
+    }
+}
 
 // Upload a blog post:
 export const UploadBlogPost = async(req: Request, res: Response): Promise<Response> =>{
@@ -120,7 +131,6 @@ export const DeleteBlogPost = async(req: Request, res: Response): Promise<Respon
     try {
 
         const singlePost = await BlogModels.findByIdAndRemove(req.params.blogID)
-
         
         return res.status(200).json({
             message: "Successfully updated this blog post",
