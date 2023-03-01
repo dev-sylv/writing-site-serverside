@@ -1,7 +1,8 @@
 import BlogModels from "../Models/postModels";
-
+import cloudinary from "../Config/cloudinary"
 import { Request, Response } from "express";
 import { BlogData } from "../AllInterfaces/AllInterfaces";
+import { environmentVariables } from "../Config/environmentVariables";
 
 // Get all blog posts:
 export const AllBlogPost = async(req: Request, res: Response): Promise<Response> =>{
@@ -54,12 +55,13 @@ export const SingleBlogPost = async(req: Request, res: Response): Promise<Respon
 // Upload a blog post:
 export const UploadBlogPost = async(req: Request<{}, {}, BlogData>, res: Response): Promise<Response> =>{
     try {
+        const cloud_Img = await cloudinary.uploader.Upload(req?.file?.path);
         const { blogname, blogcategory, blogdescription, blogimage, bloglinks, views } = req.body;
         const newBlogPost = await BlogModels.create({
             blogname,
             blogcategory,
             blogdescription,
-            blogimage,
+            blogimage: cloud_Img.secure_url,
             bloglinks,
             views
         })
