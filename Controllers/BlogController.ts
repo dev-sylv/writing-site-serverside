@@ -1,6 +1,7 @@
 import BlogModels from "../Models/postModels";
 
 import { Request, Response } from "express";
+import { BlogData } from "../AllInterfaces/AllInterfaces";
 
 // Get all blog posts:
 export const AllBlogPost = async(req: Request, res: Response): Promise<Response> =>{
@@ -51,6 +52,16 @@ export const SingleBlogPost = async(req: Request, res: Response): Promise<Respon
 // Search for a blog post:
 
 // Upload a blog post:
+export const UploadBlogPost = async(req: Request<{}, {}, BlogData>, res: Response): Promise<Response> =>{
+    try {
+        const { blogname, blogcategory, blogdescription, blogimage, bloglinks, views } = req.body;
+    } catch (error) {
+        return res.status(400).json({
+            message: "An error occured in uploading blog post",
+            data: error
+        })
+    }
+}
 
 // views of each blog post:
 
