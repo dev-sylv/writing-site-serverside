@@ -26,6 +26,6 @@ const Storage = multer.diskStorage({
 
 const BlogUpload = multer({
     storage: Storage
-}).single("postimage");
+}).single("blogimage");
 
 export { BlogUpload }
