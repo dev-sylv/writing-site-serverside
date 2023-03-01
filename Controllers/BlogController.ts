@@ -105,7 +105,7 @@ export const UpdateBlogPost = async(req: Request, res: Response): Promise<Respon
         )
         return res.status(200).json({
             message: "Successfully updated this blog post",
-            data: UpdateBlogPost
+            data: updatedblogpost
         })
     } catch (error) {
         return res.status(400).json({
