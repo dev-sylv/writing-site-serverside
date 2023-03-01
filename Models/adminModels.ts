@@ -12,7 +12,6 @@ const AdminSchema = new Schema<AdminData>({
     email: {
         type: String,
         required: true,
-        lowercase: true,
         trim: true,
         unique: true,
         default: "adimikeaugustine@gmail.com"
