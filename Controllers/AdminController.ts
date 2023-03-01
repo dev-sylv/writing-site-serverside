@@ -46,7 +46,7 @@ export const AdminLogin = async(req: Request, res: Response): Promise<Response> 
             return res.status(404).json({
                 message: "You're not an authorized Admin",
                 data: "BACK OFF!!!",
-                token: jwt.sign({ _id: adminname}, "dhfufrr-fhfrgshcuiei-vriisiwowuhcb")
+                // token: jwt.sign({ _id: adminname}, "dhfufrr-fhfrgshcuiei-vriisiwowuhcb")
             })
         }
     } catch (error) {
