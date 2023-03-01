@@ -1,14 +1,15 @@
 import AdminModels from "../Models/adminModels";
 
 import { Request, Response } from "express";
+import { environmentVariables } from "../Config/environmentVariables";
 
 // Admin Register
 export const AdminRegister = async(req: Request, res: Response): Promise<Response> =>{
     try {
         const admin = await AdminModels.create({
-            name: "Adimike Augustine",
-            email: "adimikeaugustine@gmail.com",
-            password: "augustinewrites2001"
+            name: environmentVariables.Adminname,
+            email: environmentVariables.AdminEmail,
+            password: environmentVariables.AdminPassword
         })
         return res.status(201).json({
             message: "Successfully created Admin Profile",
