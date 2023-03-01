@@ -53,10 +53,12 @@ export const SingleBlogPost = async(req: Request, res: Response): Promise<Respon
 // Search for a blog post:
 
 // Upload a blog post:
-export const UploadBlogPost = async(req: Request<{}, {}, BlogData>, res: Response): Promise<Response> =>{
+export const UploadBlogPost = async(req: Request, res: Response): Promise<Response> =>{
     try {
         const cloud_Img = await cloudinary.uploader.Upload(req?.file?.path);
+
         const { blogname, blogcategory, blogdescription, blogimage, bloglinks, views } = req.body;
+
         const newBlogPost = await BlogModels.create({
             blogname,
             blogcategory,
