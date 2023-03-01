@@ -24,8 +24,8 @@ const Storage = multer.diskStorage({
     }
 });
 
-const BlogUpload = multer({
+const BlogUploads = multer({
     storage: Storage
 }).single("blogimage");
 
-export { BlogUpload }
+export { BlogUploads }
