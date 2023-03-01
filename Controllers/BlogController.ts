@@ -55,7 +55,10 @@ export const SingleBlogPost = async(req: Request, res: Response): Promise<Respon
 export const SearchBlogPost = async(req: Request, res: Response): Promise<Response> =>{
     try {
         const searchPost = await BlogModels.findOne(req.query);
-        return res.
+        return res.status(200).json({
+            message: "Search blog post successfully gotten",
+            data: searchPost
+        })
     } catch (error) {
         return res.status(400).json({
             message: "An error occured in searching for blog post",
