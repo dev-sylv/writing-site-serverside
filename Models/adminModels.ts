@@ -23,6 +23,8 @@ const AdminSchema = new Schema<AdminData>({
         minlength: 8,
         alphanum: true
     }
+}, {
+    timestamps: true
 });
 
 const AdminModels = model<MainAdminData>("Admin", AdminSchema);

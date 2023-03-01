@@ -21,6 +21,8 @@ const BlogSchema = new Schema<BlogData>({
         type: String
     },
     views: []
+}, {
+    timestamps: true
 });
 
 const BlogModels = model<MainBlogData>("Blogs", BlogSchema);
