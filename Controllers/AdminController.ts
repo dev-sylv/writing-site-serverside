@@ -7,10 +7,14 @@ import { environmentVariables } from "../Config/environmentVariables";
 // Admin Register
 export const AdminRegister = async(req: Request, res: Response): Promise<Response> =>{
     try {
+
+        const salt = await bcrypt.genSalt(10);
+        const hashedAdminPassword = await bcrypt.hash(environmentVariables.AdminPassword, salt)
+
         const admin = await AdminModels.create({
             name: environmentVariables.Adminname,
             email: environmentVariables.AdminEmail,
-            password: environmentVariables.AdminPassword
+            password: hashedAdminPassword
         })
         return res.status(201).json({
             message: "Successfully created Admin Profile",
@@ -32,9 +36,9 @@ export const AdminLogin = async(req: Request, res: Response): Promise<Response> 
         const adminpassword = environmentVariables.AdminPassword
 
         const salt = await bcrypt.genSalt(10);
-        const hashed = await bcrypt.hash(password, salt)
+        const hashedAdminPassword = await bcrypt.hash(password, salt)
 
-        if (email === adminemail && hashed === adminpassword) {
+        if (email === adminemail && hashedAdminPassword === adminpassword) {
             return res.status(200).json({
                 message: "Admin Login Successful",
                 data: `Welcome ${adminname}`
