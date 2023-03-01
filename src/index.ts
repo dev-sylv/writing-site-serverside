@@ -5,6 +5,7 @@ import {environmentVariables} from "../Config/environmentVariables"
 import cors from "cors";
 import { DBconnect } from "../Config/db";
 import adminroutes from "../Routes/AdminRoutes";
+import blogRoutes from "../Routes/BlogRoutes";
 
 const port = environmentVariables.port
 
@@ -25,8 +26,9 @@ app.get("/", (req: Request, res: Response) =>{
     })
 });
 
-// Application Routes(Admin):
+// Application Routes(Admin, Blogs):
 app.use("/api/admin", adminroutes)
+app.use("/api/blogs", blogRoutes)
 
 // Listening to my port
 app.listen(port, () =>{
