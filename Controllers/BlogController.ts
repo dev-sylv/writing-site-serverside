@@ -55,6 +55,24 @@ export const SingleBlogPost = async(req: Request, res: Response): Promise<Respon
 export const UploadBlogPost = async(req: Request<{}, {}, BlogData>, res: Response): Promise<Response> =>{
     try {
         const { blogname, blogcategory, blogdescription, blogimage, bloglinks, views } = req.body;
+        const newBlogPost = await BlogModels.create({
+            blogname,
+            blogcategory,
+            blogdescription,
+            blogimage,
+            bloglinks,
+            views
+        })
+        if (newBlogPost) {
+            return res.status(201).json({
+                message: "Successfully created blog post",
+                data: newBlogPost
+            })
+        } else {
+            return res.status(404).json({
+                message: "Couldn't create new blog post",
+            })
+        }
     } catch (error) {
         return res.status(400).json({
             message: "An error occured in uploading blog post",
