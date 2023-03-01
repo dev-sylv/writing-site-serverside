@@ -116,3 +116,20 @@ export const UpdateBlogPost = async(req: Request, res: Response): Promise<Respon
 }
 
 // Delete a blog post:
+export const DeleteBlogPost = async(req: Request, res: Response): Promise<Response> =>{
+    try {
+
+        const singlePost = await BlogModels.findByIdAndRemove(req.params.blogID)
+
+        
+        return res.status(200).json({
+            message: "Successfully updated this blog post",
+            data: singlePost
+        })
+    } catch (error) {
+        return res.status(400).json({
+            message: "An error occured in updating this blog post",
+            data: error
+        })
+    }
+}
