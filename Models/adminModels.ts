@@ -1,4 +1,4 @@
-import { Document, model, Schema} from "mongoose";
+import mongoose, { Document, model, Schema} from "mongoose";
 
 import { AdminData } from "../AllInterfaces/AllInterfaces";
 
@@ -25,7 +25,13 @@ const AdminSchema = new Schema<AdminData>({
     isAdmin: {
         type: Boolean,
         default: false
-    }
+    },
+    blogpost: [
+        {
+            type: mongoose.Schema.Types.ObjectId,
+            ref: "Blogs"
+        }
+    ]
 }, {
     timestamps: true
 });

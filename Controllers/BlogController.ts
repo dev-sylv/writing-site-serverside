@@ -4,6 +4,7 @@ import { Request, Response } from "express";
 import { BlogData } from "../AllInterfaces/AllInterfaces";
 import { environmentVariables } from "../Config/environmentVariables";
 import AdminModels from "../Models/adminModels";
+import mongoose from "mongoose";
 
 // Get all blog posts:
 export const AllBlogPost = async(req: Request, res: Response): Promise<Response> =>{
@@ -70,6 +71,8 @@ export const UploadBlogPost = async(req: Request, res: Response): Promise<Respon
                 bloglinks,
                 views
             })
+            admin?.blogpost?.push(new mongoose.Types.ObjectId(newBlogPost._id))
+            admin?.save()
             return res.status(201).json({
                 message: "Successfully created blog post",
                 data: newBlogPost
