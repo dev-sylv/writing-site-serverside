@@ -2,13 +2,14 @@ import mongoose, { Document, model, Schema} from "mongoose";
 
 import { AdminData } from "../AllInterfaces/AllInterfaces";
 
-interface MainAdminData extends AdminData, Document{};
+export interface MainAdminData extends AdminData, mongoose.Document{};
 
-const AdminSchema = new Schema<AdminData>({
+const AdminSchema = new Schema({
     name: {
         type: String,
         required: true
     },
+
     email: {
         type: String,
         required: true,
@@ -28,14 +29,14 @@ const AdminSchema = new Schema<AdminData>({
     },
     blogpost: [
         {
-            type: mongoose.Schema.Types.ObjectId,
+  type : mongoose.Schema.Types.ObjectId,
             ref: "Blogs"
         }
     ]
 }, {
-    timestamps: true
+    timestamps: true,
 });
 
-const AdminModels = model<MainAdminData>("users", AdminSchema);
+const AdminModels = mongoose.model<MainAdminData>("users", AdminSchema);
 
 export default AdminModels;

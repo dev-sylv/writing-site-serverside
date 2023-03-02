@@ -2,9 +2,9 @@ import { Document, model, Schema} from "mongoose";
 
 import { BlogData } from "../AllInterfaces/AllInterfaces";
 
-interface MainBlogData extends BlogData, Document{};
+export interface MainBlogData extends BlogData, Document{};
 
-const BlogSchema = new Schema<BlogData>({
+const BlogSchema = new Schema({
     blogname: {
         type: String
     },
