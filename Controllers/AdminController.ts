@@ -56,18 +56,25 @@ export const AdminLogin = async(req: Request, res: Response): Promise<Response> 
         const adminemail = environmentVariables.AdminEmail
         const adminpassword = environmentVariables.AdminPassword
 
+        const user = await AdminModels.findById({email})
+
+        const checkPassword = await bcrypt.compare(password, user!.password)
+
         if (email === adminemail && password === adminpassword) {
             return res.status(200).json({
                 message: "Admin Login Successful",
                 data: `Welcome ${adminname}`
             })
-        } else {
-            return res.status(404).json({
-                message: "You're not an authorized Admin",
-                data: "BACK OFF!!!",
-                // token: jwt.sign({ _id: adminname}, "dhfufrr-fhfrgshcuiei-vriisiwowuhcb")
-            })
-        }
+        } 
+        if (user && checkPassword) {
+                return res.status(404).json({
+                    message: "User Login Successfull",
+                    data: `Welcome ${user!.name}`,
+                })
+            }
+        return res.status(200).json({
+            message: "Login Sucessfull",
+        })
     } catch (error) {
         return res.status(400).json({
             message: "Login failed", error
