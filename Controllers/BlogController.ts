@@ -70,28 +70,28 @@ export const SearchBlogPost = async(req: Request, res: Response): Promise<Respon
 // Upload a blog post:
 export const UploadBlogPost = async(req: Request, res: Response): Promise<Response> =>{
     try {
-        const cloud_Img = await cloudinary.uploader.Upload(req?.file?.path);
+        const cloudImg = await cloudinary.uploader.Upload(req?.file?.path);
 
         const admin = await AdminModels.findById(req.params.adminID)
 
         const { blogname, blogcategory, blogdescription, bloglinks, views } = req.body;
 
-        const newBlogPost = await BlogModels.create({
-            blogname,
-            blogcategory,
-            blogdescription,
-            blogimage: cloud_Img.secure_url,
-            bloglinks,
-            views
-        })
-        if (newBlogPost) {
+        if (admin) {
+            const newBlogPost = await BlogModels.create({
+                blogname,
+                blogcategory,
+                blogdescription,
+                blogimage: cloudImg.secure_url,
+                bloglinks,
+                views
+            })
             return res.status(201).json({
                 message: "Successfully created blog post",
                 data: newBlogPost
             })
         } else {
-            return res.status(404).json({
-                message: "Couldn't create new blog post",
+            return res.status(400).json({
+                message: "You're not authorized to upload blog post"
             })
         }
     } catch (error) {
