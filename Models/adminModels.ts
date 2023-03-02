@@ -14,7 +14,7 @@ const AdminSchema = new Schema<AdminData>({
         required: true,
         trim: true,
         unique: true,
-        default: "adimikeaugustine@gmail.com"
+        lowercase: true
     },
     password: {
         type: String,
@@ -30,6 +30,6 @@ const AdminSchema = new Schema<AdminData>({
     timestamps: true
 });
 
-const AdminModels = model<MainAdminData>("Admin", AdminSchema);
+const AdminModels = model<MainAdminData>("users", AdminSchema);
 
 export default AdminModels;

@@ -25,7 +25,7 @@ export const AdminRegister = async(req: Request, res: Response): Promise<Respons
             })
     } catch (error) {
         return res.status(400).json({
-            message: "Couldn't sign up", error
+            message: "Couldn't sign up user", error
         })
     }
 }
@@ -42,19 +42,14 @@ export const AdminandUserLogin = async(req: Request, res: Response): Promise<Res
 
         const checkPassword = await bcrypt.compare(password, user!.password)
 
-        if (user && checkPassword) {
-                return res.status(404).json({
-                    message: "User Login Successfull",
-                    data: `Welcome ${user!.name}`,
-                })
-            }else if (user?.isAdmin === true) {
-                return res.status(404).json({
-                    message: "Admin Login Successfull",
-                    data: `Welcome ${user!.name}`,
-                })
+        if (!user && !checkPassword) {
+            return res.status(400).json({
+                message: "User Login failed",
+            })
         }
         return res.status(200).json({
-            message: "Login successful"
+            message: "User Login Successfull",
+            data: `Welcome ${user!.name}`,
         })
     } catch (error) {
         return res.status(400).json({
