@@ -21,6 +21,10 @@ const AdminSchema = new Schema<AdminData>({
         required: true,
         minlength: 8,
         alphanum: true
+    },
+    isAdmin: {
+        type: Boolean,
+        default: false
     }
 }, {
     timestamps: true
