@@ -74,10 +74,9 @@ export const UploadBlogPost = async(req: Request, res: Response): Promise<Respon
 
         const admin = await AdminModels.findById(req.params.adminID)
 
-        const { blogname, blogcategory, blogdescription, blogimage, bloglinks, views } = req.body;
+        const { blogname, blogcategory, blogdescription, bloglinks, views } = req.body;
 
         const newBlogPost = await BlogModels.create({
-            blogger: admin?.name,
             blogname,
             blogcategory,
             blogdescription,
