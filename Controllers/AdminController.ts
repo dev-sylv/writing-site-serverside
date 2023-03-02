@@ -83,3 +83,18 @@ export const AdminLogin = async(req: Request, res: Response): Promise<Response> 
         })
     }
 }
+
+// Get all users and admins:
+export const GetEverybody = async(req: Request, res: Response): Promise<Response> =>{
+    try {
+        const everybody = await AdminModels.find();
+        return res.status(200).json({
+            message: "Got all users and admin",
+            data: everybody
+        })
+    } catch (error) {
+        return res.status(400).json({
+            message: "Couldn't get all", error
+        })
+    }
+}
