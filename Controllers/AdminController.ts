@@ -16,13 +16,15 @@ export const AdminRegister = async(req: Request, res: Response): Promise<Respons
         const admin = await AdminModels.create({
             name: environmentVariables.Adminname,
             email: environmentVariables.AdminEmail,
-            password: environmentVariables.AdminPassword
+            password: environmentVariables.AdminPassword,
+            isAdmin: true
         })
 
         const users = await AdminModels.create({
             name,
             email,
-            password: hash
+            password: hash,
+            isAdmin: false
         })
 
         if (admin) {
