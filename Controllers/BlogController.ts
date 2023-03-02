@@ -51,31 +51,16 @@ export const SingleBlogPost = async(req: Request, res: Response): Promise<Respon
     }
 }
 
-// Search for a blog post:
-export const SearchBlogPost = async(req: Request, res: Response): Promise<Response> =>{
-    try {
-        const searchPost = await BlogModels.findOne(req.query);
-        return res.status(200).json({
-            message: "Search blog post successfully gotten",
-            data: searchPost
-        })
-    } catch (error) {
-        return res.status(400).json({
-            message: "An error occured in searching for blog post",
-            data: error
-        })
-    }
-}
 
 // Upload a blog post:
 export const UploadBlogPost = async(req: Request, res: Response): Promise<Response> =>{
     try {
         const cloudImg = await cloudinary.uploader.Upload(req?.file?.path);
-
+        
         const admin = await AdminModels.findById(req.params.adminID)
-
+        
         const { blogname, blogcategory, blogdescription, bloglinks, views } = req.body;
-
+        
         if (admin) {
             const newBlogPost = await BlogModels.create({
                 blogname,
@@ -97,6 +82,21 @@ export const UploadBlogPost = async(req: Request, res: Response): Promise<Respon
     } catch (error) {
         return res.status(400).json({
             message: "An error occured in uploading blog post",
+            data: error
+        })
+    }
+}
+// Search for a blog post:
+export const SearchBlogPost = async(req: Request, res: Response): Promise<Response> =>{
+    try {
+        const searchPost = await BlogModels.findOne(req.query);
+        return res.status(200).json({
+            message: "Search blog post successfully gotten",
+            data: searchPost
+        })
+    } catch (error) {
+        return res.status(400).json({
+            message: "An error occured in searching for blog post",
             data: error
         })
     }
