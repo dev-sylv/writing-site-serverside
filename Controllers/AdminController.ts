@@ -42,15 +42,16 @@ export const AdminandUserLogin = async(req: Request, res: Response): Promise<Res
 
         const checkPassword = await bcrypt.compare(password, user!.password)
 
-        if (!user && !checkPassword) {
+        if (user && checkPassword) {
+            return res.status(200).json({
+                message: "Login successfull",
+                data: `Welcome ${user?.name}`
+            })
+        } else {
             return res.status(400).json({
-                message: "User Login failed",
+                message: "Login failed",
             })
         }
-        return res.status(200).json({
-            message: "User Login Successfull",
-            data: `Welcome ${user!.name}`,
-        })
     } catch (error) {
         return res.status(400).json({
             message: "Login failed", error
