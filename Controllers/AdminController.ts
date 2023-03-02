@@ -38,7 +38,7 @@ export const AdminandUserLogin = async(req: Request, res: Response): Promise<Res
         // const adminemail = environmentVariables.AdminEmail
         // const adminpassword = environmentVariables.AdminPassword
 
-        const user = await AdminModels.findById({email})
+        const user = await AdminModels.findOne({email})
 
         const checkPassword = await bcrypt.compare(password, user!.password)
 
@@ -50,6 +50,7 @@ export const AdminandUserLogin = async(req: Request, res: Response): Promise<Res
         } else {
             return res.status(400).json({
                 message: "Login failed",
+                data: "Either email or password is not correct"
             })
         }
     } catch (error) {

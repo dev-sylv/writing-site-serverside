@@ -61,7 +61,7 @@ export const UploadBlogPost = async(req: Request, res: Response): Promise<Respon
         
         const { blogname, blogcategory, blogdescription, bloglinks, views } = req.body;
         
-        if (admin) {
+        if (admin?.isAdmin === true) {
             const newBlogPost = await BlogModels.create({
                 blogname,
                 blogcategory,
