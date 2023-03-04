@@ -1,9 +1,8 @@
-import BlogModels, { MainBlogData } from "../Models/postModels";
+import BlogModels from "../Models/postModels";
 import cloudinary from "../Config/cloudinary"
 import { Request, Response } from "express";
 import { BlogData } from "../AllInterfaces/AllInterfaces";
-import { environmentVariables } from "../Config/environmentVariables";
-import AdminModels, { MainAdminData } from "../Models/adminModels";
+import AdminModels from "../Models/adminModels";
 import mongoose from "mongoose";
 
 // Get all blog posts:
@@ -57,18 +56,20 @@ export const SingleBlogPost = async(req: Request, res: Response): Promise<Respon
 export const UploadBlogPost = async(req: Request, res: Response): Promise<Response> =>{
     try {
     
-        const { blogname, blogcategory,blogimage, blogdescription, bloglinks, views } = req.body;
+        const { blogname, blogcategory, blogimage, blogdescription, bloglinks, views } = req.body;
         
-        const cloudImg = await cloudinary.uploader.upload(req.file?.path)
-
-        const admin = await AdminModels.findById(req.params.adminID)
+        // const cloudImg = await cloudinary.uploader.upload(req?.file?.path)
+ 
+        const id = req.params.id
+        const validId = new mongoose.Types.ObjectId(id.trim());
+        const admin = await AdminModels.findById(validId)
 
         if (admin?.isAdmin === true) {
             const newBlogPost = await BlogModels.create({
                 blogname,
                 blogcategory,
                 blogdescription,
-                blogimage: cloudImg.secure_url ,
+                blogimage ,
                 bloglinks,
                 views
             })
