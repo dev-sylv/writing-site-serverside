@@ -1,4 +1,5 @@
 export interface BlogData {
+    PostedBy: string
     blogname: string;
     blogimage: string;
     blogcategory: string;
@@ -14,3 +15,7 @@ export interface AdminData {
     isAdmin: boolean;
     blogpost: {}[];
 }
+
+interface CustomRequest extends Request {
+    file?: any;
+  }

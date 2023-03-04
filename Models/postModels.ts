@@ -5,6 +5,9 @@ import { BlogData } from "../AllInterfaces/AllInterfaces";
 export interface MainBlogData extends BlogData, Document{};
 
 const BlogSchema = new Schema({
+    PostedBy: {
+        type: String
+    },
     blogname: {
         type: String
     },

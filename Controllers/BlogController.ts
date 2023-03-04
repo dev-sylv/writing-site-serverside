@@ -56,25 +56,25 @@ export const SingleBlogPost = async(req: Request, res: Response): Promise<Respon
 export const UploadBlogPost = async(req: Request, res: Response): Promise<Response> =>{
     try {
     
-        const { blogname, blogcategory, blogimage, blogdescription, bloglinks, views } = req.body;
-        
-        // const cloudImg = await cloudinary.uploader.upload(req?.file?.path)
- 
-        const id = req.params.id
-        const validId = new mongoose.Types.ObjectId(id.trim());
-        const admin = await AdminModels.findById(validId)
+        const admin = await AdminModels.findById(req.params.adminID)
 
         if (admin?.isAdmin === true) {
+            const { blogname, blogcategory, blogimage, blogdescription, bloglinks, views } = req.body;
+        
+        const cloudImg = await cloudinary.uploader.upload(req?.file?.path)
+
             const newBlogPost = await BlogModels.create({
+                PostedBy: admin?.name,
                 blogname,
                 blogcategory,
                 blogdescription,
-                blogimage ,
+                blogimage: cloudImg.secure_url ,
                 bloglinks,
                 views
             })
 
-           admin?.blogpost?.push(new mongoose.Types.ObjectId(newBlogPost?._id))
+           
+           admin?.blogpost.push(new mongoose.Types.ObjectId(newBlogPost._id))
            admin?.save()
 
             return res.status(201).json({
@@ -88,9 +88,10 @@ export const UploadBlogPost = async(req: Request, res: Response): Promise<Respon
             })
         }
     
-    } catch (error) {
+    } catch (error: any) {
         return res.status(400).json({
-            message: "An error occured in uploading blog post", error
+            message: "An error occured in uploading blog post", error,
+            data: error.message
         })
     }
 }
