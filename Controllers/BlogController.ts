@@ -1,7 +1,7 @@
 import BlogModels from "../Models/postModels";
 import cloudinary from "../Config/cloudinary"
 import { Request, Response } from "express";
-import { BlogData } from "../AllInterfaces/AllInterfaces";
+import { BlogData, CustomRequest } from "../AllInterfaces/AllInterfaces";
 import AdminModels from "../Models/adminModels";
 import mongoose from "mongoose";
 
@@ -53,7 +53,7 @@ export const SingleBlogPost = async(req: Request, res: Response): Promise<Respon
 
 
 // Upload a blog post:
-export const UploadBlogPost = async(req: Request, res: Response): Promise<Response> =>{
+export const UploadBlogPost = async(req: CustomRequest, res: Response): Promise<Response> =>{
     try {
     
         const admin = await AdminModels.findById(req.params.adminID)

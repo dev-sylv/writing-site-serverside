@@ -16,6 +16,8 @@ export interface AdminData {
     blogpost: {}[];
 }
 
-interface CustomRequest extends Request {
+export interface CustomRequest extends Request {
     file?: any;
-  }
+    params: any;
+    body: any;
+}
