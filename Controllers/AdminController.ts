@@ -2,25 +2,24 @@ import AdminModels from "../Models/adminModels";
 import bcrypt from "bcrypt"
 import jwt from "jsonwebtoken"
 import { Request, Response } from "express";
-import { environmentVariables } from "../Config/environmentVariables";
 
 // Admin and Users Register
-export const AdminRegister = async(req: Request, res: Response): Promise<Response> =>{
+export const RegisterUsers = async(req: Request, res: Response): Promise<Response> =>{
     try {
 
         const { name, email, password } = req.body;
 
         const salt = await bcrypt.genSalt(10);
-        const hash = await bcrypt.hash(password, salt)
+        const hashedPassword = await bcrypt.hash(password, salt)
 
         const users = await AdminModels.create({
             name,
             email,
-            password: hash,
+            password: hashedPassword,
             isAdmin: false
         })
         return res.status(201).json({
-                message: "Successfully created User Profile",
+                message: "Successfully created User",
                 data: users
             })
     } catch (error) {

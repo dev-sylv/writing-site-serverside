@@ -27,7 +27,7 @@ app.get("/", (req: Request, res: Response) =>{
 });
 
 // Application Routes(Admin, Blogs):
-app.use("/api/admin", adminroutes)
+app.use("/api/users", adminroutes)
 app.use("/api/blog", blogRoutes)
 
 // Listening to my port
