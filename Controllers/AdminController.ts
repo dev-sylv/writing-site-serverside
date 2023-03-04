@@ -33,25 +33,17 @@ export const RegisterUsers = async(req: Request, res: Response): Promise<Respons
 export const AdminandUserLogin = async(req: Request, res: Response): Promise<Response> =>{
     try {
         const { email, password } = req.body;
-        // const adminname = environmentVariables.Adminname
-        // const adminemail = environmentVariables.AdminEmail
-        // const adminpassword = environmentVariables.AdminPassword
-
+        
         const user = await AdminModels.findOne({email})
 
         const checkPassword = await bcrypt.compare(password, user!.password)
 
-        if (user && checkPassword) {
-            return res.status(200).json({
-                message: "Login successfull",
-                data: `Welcome ${user?.name}`
-            })
-        } else {
+        if (!email || !password) {
             return res.status(400).json({
-                message: "Login failed",
-                data: "Either email or password is not correct"
+                message: "Please fill in all fields",
             })
         }
+
     } catch (error) {
         return res.status(400).json({
             message: "Login failed", error
