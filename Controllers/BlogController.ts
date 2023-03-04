@@ -72,23 +72,24 @@ export const UploadBlogPost = async(req: Request, res: Response): Promise<Respon
                 bloglinks,
                 views
             })
-           await admin?.blogpost?.push(new mongoose.Types.ObjectId(newBlogPost?._id))
-           await admin?.save()
+
+           admin?.blogpost?.push(new mongoose.Types.ObjectId(newBlogPost?._id))
+           admin?.save()
+
             return res.status(201).json({
                 message: "Successfully created blog post",
                 data: newBlogPost
             })
+
         } else {
             return res.status(400).json({
                 message: "You're not authorized to upload blog post"
             })
         }
     
-    } catch (error:any) {
+    } catch (error) {
         return res.status(400).json({
-            message: "An error occured in uploading blog post",
-            data: error.message,
-            error : error
+            message: "An error occured in uploading blog post", error
         })
     }
 }
