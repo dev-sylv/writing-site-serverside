@@ -44,6 +44,12 @@ export const AdminandUserLogin = async(req: Request, res: Response): Promise<Res
             })
         }
 
+        if (!user) {
+            return res.status(400).json({
+                message: "User does not exist",
+            })
+        }
+
     } catch (error) {
         return res.status(400).json({
             message: "Login failed", error
