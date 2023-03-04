@@ -2,7 +2,7 @@ import mongoose, { Document, model, Schema} from "mongoose";
 
 import { AdminData } from "../AllInterfaces/AllInterfaces";
 
-export interface MainAdminData extends AdminData, mongoose.Document{};
+export interface MainAdminData extends AdminData, Document{};
 
 const AdminSchema = new Schema({
     name: {
@@ -25,11 +25,10 @@ const AdminSchema = new Schema({
     },
     isAdmin: {
         type: Boolean,
-        default: false
     },
     blogpost: [
         {
-  type : mongoose.Schema.Types.ObjectId,
+            type : mongoose.Schema.Types.ObjectId,
             ref: "Blogs"
         }
     ]
@@ -37,6 +36,6 @@ const AdminSchema = new Schema({
     timestamps: true,
 });
 
-const AdminModels = mongoose.model<MainAdminData>("users", AdminSchema);
+const AdminModels = model<MainAdminData>("users", AdminSchema);
 
 export default AdminModels;

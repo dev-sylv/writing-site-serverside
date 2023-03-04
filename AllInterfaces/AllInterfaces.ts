@@ -12,6 +12,5 @@ export interface AdminData {
     email: string;
     password: string;
     isAdmin: boolean;
-    // _id: string
     blogpost: {}[];
 }
