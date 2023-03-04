@@ -57,20 +57,18 @@ export const SingleBlogPost = async(req: Request, res: Response): Promise<Respon
 export const UploadBlogPost = async(req: Request, res: Response): Promise<Response> =>{
     try {
     
-        
-        
         const { blogname, blogcategory,blogimage, blogdescription, bloglinks, views } = req.body;
         
-        // const cloudImg = await cloudinary.uploader.upload(req.file?.path)
+        const cloudImg = await cloudinary.uploader.upload(req.file?.path)
 
         const admin = await AdminModels.findById(req.params.adminID)
-        console.log(admin)
+
         if (admin?.isAdmin === true) {
             const newBlogPost = await BlogModels.create({
                 blogname,
                 blogcategory,
                 blogdescription,
-                blogimage ,
+                blogimage: cloudImg.secure_url ,
                 bloglinks,
                 views
             })

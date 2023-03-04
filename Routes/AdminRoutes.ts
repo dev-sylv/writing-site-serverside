@@ -4,7 +4,7 @@ import { AdminandUserLogin, RegisterUsers, GetEverybody } from "../Controllers/A
 const adminroutes = Router();
 
 adminroutes.route("/registerusers").post(RegisterUsers);
-adminroutes.route("/admin-login").post(AdminandUserLogin);
+adminroutes.route("/loginuser").post(AdminandUserLogin);
 adminroutes.route("/getallusers").get(GetEverybody);
 
 export default adminroutes
