@@ -1,9 +1,69 @@
 import BlogModels from "../Models/postModels";
-import cloudinary from "../Config/cloudinary"
+import cloud from "../Config/cloudinary"
 import { Request, Response } from "express";
-import { BlogData, CustomRequest } from "../AllInterfaces/AllInterfaces";
 import AdminModels from "../Models/adminModels";
 import mongoose from "mongoose";
+import { BlogUploads } from "../Config/multer";
+
+// Upload a blog post:
+export const UploadBlogPost = async(req: Request, res: Response): Promise<Response> =>{
+    try {
+    
+        const admin = await AdminModels.findById(req.params.adminID)
+
+        if (admin?.isAdmin === true) {
+            const { blogname, blogcategory, blogimage, blogdescription, bloglinks, views } = req.body;
+        
+        // const cloudImg = await cloud.v2.uploader(req?.file?.path)
+
+            const newBlogPost = await BlogModels.create({
+                PostedBy: admin?.name,
+                blogname,
+                blogcategory,
+                blogdescription,
+                blogimage,
+                bloglinks,
+                views
+            })
+
+           
+           admin?.blogpost.push(new mongoose.Types.ObjectId(newBlogPost._id))
+           admin?.save()
+
+            return res.status(201).json({
+                message: "Successfully created blog post",
+                data: newBlogPost
+            })
+
+        } else {
+            return res.status(400).json({
+                message: "You're not authorized to upload blog post"
+            })
+        }
+    
+    } catch (error: any) {
+        return res.status(400).json({
+            message: "An error occured in uploading blog post", error,
+            data: error.message
+        })
+    }
+}
+// Search for a blog post:
+export const SearchBlogPost = async(req: Request, res: Response): Promise<Response> =>{
+    try {
+        const searchPost = await BlogModels.findOne(req.query);
+        return res.status(200).json({
+            message: "Search blog post successfully gotten",
+            data: searchPost
+        })
+    } catch (error) {
+        return res.status(400).json({
+            message: "An error occured in searching for blog post",
+            data: error
+        })
+    }
+}
+
 
 // Get all blog posts:
 export const AllBlogPost = async(req: Request, res: Response): Promise<Response> =>{
@@ -46,66 +106,6 @@ export const SingleBlogPost = async(req: Request, res: Response): Promise<Respon
     } catch (error) {
         return res.status(400).json({
             message: "Couldn't get this blog post",
-            data: error
-        })
-    }
-}
-
-
-// Upload a blog post:
-export const UploadBlogPost = async(req: CustomRequest, res: Response): Promise<Response> =>{
-    try {
-    
-        const admin = await AdminModels.findById(req.params.adminID)
-
-        if (admin?.isAdmin === true) {
-            const { blogname, blogcategory, blogimage, blogdescription, bloglinks, views } = req.body;
-        
-        const cloudImg = await cloudinary.uploader.upload(req?.file?.path)
-
-            const newBlogPost = await BlogModels.create({
-                PostedBy: admin?.name,
-                blogname,
-                blogcategory,
-                blogdescription,
-                blogimage: cloudImg.secure_url ,
-                bloglinks,
-                views
-            })
-
-           
-           admin?.blogpost.push(new mongoose.Types.ObjectId(newBlogPost._id))
-           admin?.save()
-
-            return res.status(201).json({
-                message: "Successfully created blog post",
-                data: newBlogPost
-            })
-
-        } else {
-            return res.status(400).json({
-                message: "You're not authorized to upload blog post"
-            })
-        }
-    
-    } catch (error: any) {
-        return res.status(400).json({
-            message: "An error occured in uploading blog post", error,
-            data: error.message
-        })
-    }
-}
-// Search for a blog post:
-export const SearchBlogPost = async(req: Request, res: Response): Promise<Response> =>{
-    try {
-        const searchPost = await BlogModels.findOne(req.query);
-        return res.status(200).json({
-            message: "Search blog post successfully gotten",
-            data: searchPost
-        })
-    } catch (error) {
-        return res.status(400).json({
-            message: "An error occured in searching for blog post",
             data: error
         })
     }

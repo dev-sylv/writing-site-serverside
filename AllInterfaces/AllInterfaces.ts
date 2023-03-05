@@ -15,9 +15,3 @@ export interface AdminData {
     isAdmin: boolean;
     blogpost: {}[];
 }
-
-export interface CustomRequest extends Request {
-    file?: any;
-    params: any;
-    body: any;
-}
