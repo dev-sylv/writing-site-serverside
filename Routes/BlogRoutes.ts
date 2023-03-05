@@ -11,7 +11,7 @@ blogRoutes.route("/single-blog-post/:blogID").get(SingleBlogPost);
 blogRoutes.route("/uploadpost/:adminID").post(BlogUploads, UploadBlogPost);
 blogRoutes.route("/edit-blog-post/:blogID").patch(UpdateBlogPost);
 blogRoutes.route("/delete-blog-post/:blogID").delete(DeleteBlogPost);
-blogRoutes.route("/search-for-blog-post").get(SearchBlogPost);
+blogRoutes.route("/search-for-blog-post").post(SearchBlogPost);
 blogRoutes.route("/views-for-blog-post/:blogID").patch(BlogPostViews);
 
 export default blogRoutes
