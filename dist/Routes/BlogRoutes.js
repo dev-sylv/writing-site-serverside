@@ -1,0 +1,14 @@
+"use strict";
+Object.defineProperty(exports, "__esModule", { value: true });
+const express_1 = require("express");
+const multer_1 = require("../Config/multer");
+const BlogController_1 = require("../Controllers/BlogController");
+const blogRoutes = (0, express_1.Router)();
+blogRoutes.route("/all-blog-posts").get(BlogController_1.AllBlogPost);
+blogRoutes.route("/single-blog-post/:blogID").get(BlogController_1.SingleBlogPost);
+blogRoutes.route("/uploadpost/:adminID").post(multer_1.BlogUploads, BlogController_1.UploadBlogPost);
+blogRoutes.route("/edit-blog-post/:blogID").patch(BlogController_1.UpdateBlogPost);
+blogRoutes.route("/delete-blog-post/:blogID").delete(BlogController_1.DeleteBlogPost);
+blogRoutes.route("/search-for-blog-post/:blogID").get(BlogController_1.SearchBlogPost);
+blogRoutes.route("/views-for-blog-post/:blogID").patch(BlogController_1.BlogPostViews);
+exports.default = blogRoutes;
